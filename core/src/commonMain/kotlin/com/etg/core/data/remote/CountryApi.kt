@@ -15,9 +15,13 @@ class CountryApi(
     private val deserializer = Json {
         ignoreUnknownKeys = true
     }
-    suspend fun getCountries(): List<Country> {
-        return client.get(baseUrl).bodyAsText().let { jsonString ->
-            deserializer.decodeFromString<List<Country>>(jsonString)
+    suspend fun getCountries(): Result<List<Country>> {
+        return try {
+            Result.success(client.get(baseUrl).bodyAsText().let { jsonString ->
+                deserializer.decodeFromString<List<Country>>(jsonString)
+            })
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

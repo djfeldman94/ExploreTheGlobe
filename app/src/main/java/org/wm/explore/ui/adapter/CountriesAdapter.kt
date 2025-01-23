@@ -40,7 +40,8 @@ class CountryViewHolder(
 
     fun bind(country: Country) {
         binding.apply {
-            nameRegionText.text = "${country.name}, ${country.region} ${country.code}"
+            nameRegionText.text = "${country.name}, ${country.region}"
+            codeText.text = country.code
             capitalText.text = country.capital
         }
     }

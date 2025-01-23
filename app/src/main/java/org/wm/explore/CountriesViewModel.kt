@@ -4,12 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.etg.core.domain.model.Country
 import com.etg.core.domain.repository.CountryRepository
+import com.etg.core.domain.usecase.GetCountriesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CountriesViewModel(
-    private val countriesRepository: CountryRepository
+    private val getCountriesUseCase: GetCountriesUseCase
 ): ViewModel() {
     private val _countriesState = MutableStateFlow<CountriesState>(CountriesState.Loading)
     val countriesState: StateFlow<CountriesState> = _countriesState
@@ -21,7 +22,7 @@ class CountriesViewModel(
     fun getCountries() {
         _countriesState.value = CountriesState.Loading
         viewModelScope.launch {
-            countriesRepository.getCountries().let { result ->
+            getCountriesUseCase().let { result ->
                 result.fold(
                     onSuccess = { countries ->
                         _countriesState.value = CountriesState.Success(countries)
@@ -37,7 +38,7 @@ class CountriesViewModel(
 
 
     sealed class CountriesState {
-        object Loading : CountriesState()
+        data object Loading : CountriesState()
         data class Success(val countries: List<Country>) : CountriesState()
         data class Error(val message: String) : CountriesState()
     }

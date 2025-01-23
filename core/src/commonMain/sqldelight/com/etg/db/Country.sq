@@ -1,0 +1,16 @@
+CREATE TABLE country_table (
+    uuid INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    region TEXT NOT NULL,
+    code TEXT NOT NULL,
+    capital TEXT NOT NULL
+);
+
+insertCountry:
+INSERT INTO country_table (name, region, code, capital) VALUES (?, ?, ?, ?);
+
+selectAllCountries:
+SELECT * FROM country_table;
+
+deleteAllCountries:
+DELETE FROM country_table;

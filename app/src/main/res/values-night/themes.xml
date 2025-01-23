@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.ExploreTheGlobe" parent="Theme.MaterialComponents.DayNight">
-        <item name="backgroundColor">@color/light_background</item>
-        <item name="android:textColor">@color/light_text</item>
+        <item name="backgroundColor">@color/dark_background</item>
+        <item name="android:textColor">@color/dark_text</item>
     </style>
 </resources>

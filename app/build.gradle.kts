@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":core"))
     implementation(libs.koin.android)
+    implementation(libs.androidx.swiperefreshlayout)
 
     implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)

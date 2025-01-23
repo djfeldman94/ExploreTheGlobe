@@ -64,7 +64,6 @@ Comprehensive unit tests cover:
 - Repository implementation
 - API client
 - Database operations
-- Use case logic
 
 ## Usage
 

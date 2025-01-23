@@ -43,7 +43,7 @@ class CountryRepositoryImplTest {
 
         // Then
         assertTrue(result.isFailure)
-        assertTrue(result.exceptionOrNull()?.message?.contains("Failed to fetch countries") == true)
+        assertTrue(result.exceptionOrNull()?.message?.contains("HTTP Error") == true)
     }
 
     @Test

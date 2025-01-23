@@ -3,6 +3,7 @@ package com.etg.core.di
 import com.etg.core.data.dao.CountryDao
 import com.etg.core.data.dao.CountryDaoSqlDelight
 import com.etg.core.data.remote.CountryApi
+import com.etg.core.data.remote.CountryApiImpl
 import com.etg.core.data.repository.CountryRepositoryImpl
 import com.etg.core.domain.repository.CountryRepository
 import com.etg.core.domain.usecase.GetCountriesUseCase
@@ -41,7 +42,7 @@ val coreModule = module {
         }
     }
     single<CountryApi> {
-        CountryApi(get())
+        CountryApiImpl(get())
     }
     single<CountryDao> {
         CountryDaoSqlDelight(get(), get())

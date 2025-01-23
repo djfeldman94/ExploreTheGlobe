@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class CountryApiTest {
     private fun createMockHttpClient(responseBody: String, status: HttpStatusCode = HttpStatusCode.OK): HttpClient {
@@ -36,11 +36,11 @@ class CountryApiTest {
     fun testGetCountries_Success() = runTest {
         // Given
         val mockClient = createMockHttpClient(TestData.mockJsonResponse)
-        val api = CountryApi(mockClient)
+        val api = CountryApiImpl(mockClient)
 
         // When
         val countriesResult = api.getCountries()
-        assert(countriesResult.isSuccess)
+        assertTrue(countriesResult.isSuccess)
 
 
         // Then
@@ -55,10 +55,10 @@ class CountryApiTest {
             responseBody = "Error",
             status = HttpStatusCode.InternalServerError
         )
-        val api = CountryApi(mockClient)
+        val api = CountryApiImpl(mockClient)
 
         val countriesResult = api.getCountries()
         // Then
-        assert(countriesResult.isFailure)
+        assertTrue(countriesResult.isFailure)
     }
 }

@@ -90,13 +90,6 @@ Implements both light and dark themes using:
 - Kotlin Coroutines - Asynchronous operations
 - Material Design - UI components and theming
 
-## Testing
-
-The app module focuses on UI testing with:
-- Unit tests for ViewModel logic
-- UI tests for component interaction
-- Integration tests with core module
-
 ## Future Improvements
 
 - Implement search functionality

@@ -7,6 +7,11 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 
+/**
+ * API for country data
+ *
+ * For now, url is hardcoded. In the future, this would be injected in the constructor or elsewhere
+ */
 class CountryApi(
     private val client: HttpClient
 ) {
@@ -17,6 +22,7 @@ class CountryApi(
     }
     suspend fun getCountries(): Result<List<Country>> {
         return try {
+            // Body is returned as plain text not JSON
             Result.success(client.get(baseUrl).bodyAsText().let { jsonString ->
                 deserializer.decodeFromString<List<Country>>(jsonString)
             })

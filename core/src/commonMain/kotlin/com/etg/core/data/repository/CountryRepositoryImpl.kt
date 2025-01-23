@@ -8,6 +8,11 @@ import io.ktor.client.plugins.ClientRequestException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * Implementation of [CountryRepository] that fetches countries from the network and stores them in a local database.
+ *
+ * This implementation is offline first, meaning that it will always try to fetch countries from the local database first.
+ */
 class CountryRepositoryImpl(
     private val api: CountryApi,
     private val countryDao: CountryDao,
@@ -37,6 +42,7 @@ class CountryRepositoryImpl(
         return try {
             val countries = countryDao.getCountries()
             if (countries.isEmpty()) {
+                // If the database is empty, try to fetch countries from the network
                 refreshCountries()
                 val refreshedCountries = countryDao.getCountries()
                 if (refreshedCountries.isEmpty()) {

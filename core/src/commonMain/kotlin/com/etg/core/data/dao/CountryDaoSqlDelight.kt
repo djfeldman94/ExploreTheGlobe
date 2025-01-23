@@ -35,6 +35,8 @@ class CountryDaoSqlDelight(
     }
 
     override suspend fun insertCountries(countries: List<Country>) {
+        // Clear the table before inserting new data
+        deleteAllCountries()
         database.countryQueries.transaction {
             countries.forEach { country ->
                 database.countryQueries.insertCountry(

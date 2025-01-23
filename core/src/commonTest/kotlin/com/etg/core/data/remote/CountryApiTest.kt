@@ -39,11 +39,13 @@ class CountryApiTest {
         val api = CountryApi(mockClient)
 
         // When
-        val countries = api.getCountries()
+        val countriesResult = api.getCountries()
+        assert(countriesResult.isSuccess)
+
 
         // Then
-        assertEquals(249, countries.size)
-        // TODO assertEquals(TestData.testCountries, countries)
+        assertEquals(249, countriesResult.getOrThrow().size)
+
     }
 
     @Test
@@ -55,9 +57,8 @@ class CountryApiTest {
         )
         val api = CountryApi(mockClient)
 
+        val countriesResult = api.getCountries()
         // Then
-        assertFailsWith<Exception> {
-            api.getCountries()
-        }
+        assert(countriesResult.isFailure)
     }
 }

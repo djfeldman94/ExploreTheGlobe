@@ -15,38 +15,59 @@ kotlin {
         jvmToolchain(17)
     }
 
+    jvm()
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.compilations.getByName("main") {
+            cinterops.create("sqlite3") {
+                defFile(project.file("src/iosMain/c_interop/sqlite3.def"))
+                compilerOpts("-lsqlite3")
+            }
+        }
+    }
 
 
-    
+
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-                implementation("io.ktor:ktor-client-core:2.3.7")
-                implementation("io.ktor:ktor-client-content-negotiation:2.3.7")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
-                implementation(libs.koin.core)
-                implementation(libs.sqldelight.coroutines)
+        commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.koin.core)
+            implementation(libs.sqldelight.coroutines)
 
-            }
         }
-        
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-                implementation("io.ktor:ktor-client-mock:2.3.7")
-                implementation("app.cash.turbine:turbine:1.0.0")
-                implementation("io.mockk:mockk:1.13.8")
-            }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.ktor.client.mock)
+            implementation(libs.turbine)
         }
-        
-        val androidMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-android:2.3.7")
-                implementation(libs.sqldelight.android)
-            }
+
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+            implementation(libs.sqldelight.android)
+
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.sqldelight.jvm)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.sqldelight.ios)
+        }
+
+        androidUnitTest.dependencies {
+            implementation(libs.sqldelight.jvm)
+
         }
     }
 }
@@ -54,7 +75,7 @@ kotlin {
 android {
     namespace = "com.etg.core"
     compileSdk = 35
-    
+
     defaultConfig {
         minSdk = 24
     }

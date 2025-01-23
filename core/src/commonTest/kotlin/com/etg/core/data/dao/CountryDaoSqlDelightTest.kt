@@ -1,7 +1,6 @@
 package com.etg.core.data.dao
 
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.etg.core.domain.model.Country
 import com.etg.db.Database
 import kotlinx.coroutines.flow.first
@@ -36,7 +35,7 @@ class CountryDaoSqlDelightTest {
 
     @BeforeTest
     fun setup() {
-        driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        driver = createTestSqlDriver()
         Database.Schema.create(driver)
         database = Database(driver)
         countryDao = CountryDaoSqlDelight(database, testDispatcher)

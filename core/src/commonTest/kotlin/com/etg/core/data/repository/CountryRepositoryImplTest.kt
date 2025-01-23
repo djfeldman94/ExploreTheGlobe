@@ -1,11 +1,6 @@
 package com.etg.core.data.repository
 
-import com.etg.core.data.dao.CountryDao
-import com.etg.core.data.remote.CountryApi
 import com.etg.core.util.TestData
-import io.ktor.client.plugins.*
-import io.mockk.coEvery
-import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -15,19 +10,18 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class CountryRepositoryImplTest {
-    private val mockApi = mockk<CountryApi>()
-    private val mockDao = mockk<CountryDao>()
+    private val fakeApi = FakeCountryApi()
+    private val fakeDao = FakeCountryDao()
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val repository = CountryRepositoryImpl(mockApi, mockDao, CoroutineScope(
+    private val repository = CountryRepositoryImpl(fakeApi, fakeDao, CoroutineScope(
         UnconfinedTestDispatcher()
     ))
 
     @Test
     fun testGetCountries_Success() = runTest {
         // Given
-        coEvery { mockApi.getCountries() } returns Result.success(TestData.testCountries)
-        coEvery { mockDao.getCountries() } returns TestData.testCountries
-
+        fakeApi.setCountries(TestData.testCountries)
+        fakeDao.insertCountries(TestData.testCountries)
 
         // When
         val result = repository.getCountries()
@@ -40,12 +34,9 @@ class CountryRepositoryImplTest {
     @Test
     fun testGetCountries_ApiError() = runTest {
         // Given
-        val exception = ClientRequestException(
-            mockk(relaxed = true),
-            "HTTP Error"
-        )
-        coEvery { mockApi.getCountries() } throws exception
-        coEvery { mockDao.getCountries() } throws exception
+        val exception = Exception("HTTP Error")
+        fakeApi.setShouldThrowError(true, exception)
+        fakeDao.setShouldThrowError(true, exception)
 
         // When
         val result = repository.getCountries()
@@ -59,8 +50,8 @@ class CountryRepositoryImplTest {
     fun testGetCountries_GeneralError() = runTest {
         // Given
         val exception = IllegalStateException("Some error")
-        coEvery { mockApi.getCountries() } throws exception
-        coEvery { mockDao.getCountries() } throws exception
+        fakeApi.setShouldThrowError(true, exception)
+        fakeDao.setShouldThrowError(true, exception)
 
         // When
         val result = repository.getCountries()

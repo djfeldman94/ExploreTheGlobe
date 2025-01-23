@@ -12,8 +12,8 @@ class FakeCountryApi : CountryApi {
         countries = newCountries
     }
 
-    fun setShouldThrowError(throw: Boolean, exception: Exception? = null) {
-        shouldThrowError = throw
+    fun setShouldThrowError(shouldThrow: Boolean, exception: Exception? = null) {
+        shouldThrowError = shouldThrow
         error = exception
     }
 

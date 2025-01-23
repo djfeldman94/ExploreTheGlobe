@@ -11,8 +11,8 @@ class FakeCountryDao : CountryDao {
     private var shouldThrowError = false
     private var error: Exception? = null
 
-    fun setShouldThrowError(throw: Boolean, exception: Exception? = null) {
-        shouldThrowError = throw
+    fun setShouldThrowError(shouldThrow: Boolean, exception: Exception? = null) {
+        shouldThrowError = shouldThrow
         error = exception
     }
 

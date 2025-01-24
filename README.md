@@ -78,6 +78,8 @@ Implements both light and dark themes using:
 
 ## Getting Started
 
+Java 17 is required to build the project.
+
 1. Build the core module first
 2. Run the app module
 3. The app will automatically fetch and display countries

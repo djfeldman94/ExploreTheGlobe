@@ -2,12 +2,14 @@ package org.wm.explore.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.etg.core.domain.model.Country
+import org.wm.explore.R
 import org.wm.explore.databinding.ItemCountryBinding
 
+/**
+ * Adapter for the list of countries to be displayed in the RecyclerView
+ */
 class CountriesAdapter(
     private var items: List<Country>
 ) : RecyclerView.Adapter<CountryViewHolder>() {
@@ -40,7 +42,8 @@ class CountryViewHolder(
 
     fun bind(country: Country) {
         binding.apply {
-            nameRegionText.text = "${country.name}, ${country.region}"
+            nameRegionText.text =
+                binding.root.context.getString(R.string.country_format_template, country.name, country.region)
             codeText.text = country.code
             capitalText.text = country.capital
         }

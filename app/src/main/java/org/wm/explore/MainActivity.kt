@@ -15,6 +15,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.wm.explore.ui.adapter.CountriesAdapter
 
 
+/**
+ * Main activity for the app
+ *
+ * For this example app, we will keep everything in this activity. In a real app, I would host the logic in a separate
+ * fragment.
+ */
 class MainActivity : ComponentActivity() {
     private var recyclerView: RecyclerView? = null
     private var adapter: CountriesAdapter? = null

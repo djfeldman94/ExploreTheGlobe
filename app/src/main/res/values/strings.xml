@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Explore the Globe</string>
+    <string name="country_format_template">%1$s, %2$s</string>
 </resources>
